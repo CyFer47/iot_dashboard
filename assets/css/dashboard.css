@@ -1,4 +1,5 @@
-/* Reset and Base Styles */
+/* Updated Dashboard CSS - Single Page, No Scroll */
+
 * {
     margin: 0;
     padding: 0;
@@ -8,14 +9,17 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
+    height: 100vh;
     color: #333;
+    overflow: hidden; /* Prevent scrolling */
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 100%;
+    height: 100vh;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header */
@@ -24,15 +28,16 @@ header {
     justify-content: space-between;
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 30px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
     backdrop-filter: blur(10px);
+    height: 60px;
 }
 
 header h1 {
     color: white;
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: 300;
 }
 
@@ -56,52 +61,62 @@ header h1 {
     background: #51cf66;
 }
 
-/* Dashboard Grid */
+/* Main Dashboard Grid - Modified Layout */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columns */
+    grid-template-rows: 200px 1fr; /* 2 rows: top cards + chart */
+    gap: 15px;
+    flex: 1;
+    height: calc(100vh - 90px); /* Subtract header and margins */
 }
 
+/* Top Three Cards - Same Height */
 .card {
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    padding: 25px;
+    border-radius: 12px;
+    padding: 20px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
 }
 
 .card h2 {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #4a5568;
     font-weight: 500;
     border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
+    font-size: 1.1em;
 }
 
-/* Readings Grid */
+/* Current Readings - Grid Column 1 */
+.readings-card {
+    grid-column: 1;
+    grid-row: 1;
+}
+
 .readings-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 15px;
+    flex: 1;
 }
 
 .reading-item {
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     background: linear-gradient(145deg, #f7fafc, #edf2f7);
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .reading-label {
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: #718096;
     margin-bottom: 8px;
     text-transform: uppercase;
@@ -109,25 +124,24 @@ header h1 {
 }
 
 .reading-value {
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: bold;
     color: #2d3748;
 }
 
-.reading-value.temperature {
-    color: #e53e3e;
+/* LED Control - Grid Column 2 */
+.led-card {
+    grid-column: 2;
+    grid-row: 1;
 }
 
-.reading-value.humidity {
-    color: #3182ce;
-}
-
-/* LED Control */
 .control-section {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
     justify-content: center;
+    gap: 15px;
+    flex: 1;
 }
 
 .switch {
@@ -177,31 +191,45 @@ input:checked + .slider:before {
 
 #led-status-text {
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1.2em;
+    color: #2d3748;
 }
 
-/* Chart */
-.chart-card {
-    grid-column: 1 / -1;
+/* Recent Data - Grid Column 3 - TOP RIGHT */
+.recent-data-card {
+    grid-column: 3;
+    grid-row: 1;
 }
 
-#sensor-chart {
-    max-height: 400px;
-}
-
-/* Data Table */
 .data-table-container {
-    overflow-x: auto;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 140px;
+}
+
+.data-table-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.data-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.data-table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 0.85em;
 }
 
 table th,
 table td {
-    padding: 12px 8px;
+    padding: 8px 6px;
     text-align: left;
     border-bottom: 1px solid #e2e8f0;
 }
@@ -210,44 +238,40 @@ table th {
     background: #f7fafc;
     font-weight: 600;
     color: #4a5568;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 table tbody tr:hover {
     background: #f7fafc;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-    }
-    
-    header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-    
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .readings-grid {
-        grid-template-columns: 1fr;
-    }
+/* Chart - Full Width Bottom */
+.chart-card {
+    grid-column: 1 / -1; /* Span all 3 columns */
+    grid-row: 2;
 }
 
-/* Loading Animation */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255,255,255,.3);
-    border-radius: 50%;
-    border-top-color: #fff;
-    animation: spin 1s ease-in-out infinite;
+#sensor-chart {
+    height: 100% !important;
+    width: 100% !important;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+/* LED Indicator in Table */
+.led-indicator {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.led-indicator.on {
+    background: #c6f6d5;
+    color: #22543d;
+}
+
+.led-indicator.off {
+    background: #fed7d7;
+    color: #742a2a;
 }

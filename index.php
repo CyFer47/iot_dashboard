@@ -18,8 +18,8 @@
         </header>
 
         <div class="dashboard-grid">
-            <!-- Current Readings -->
-            <div class="card">
+            <!-- Current Readings - Top Left -->
+            <div class="card readings-card">
                 <h2>Current Readings</h2>
                 <div class="readings-grid">
                     <div class="reading-item">
@@ -33,8 +33,8 @@
                 </div>
             </div>
 
-            <!-- LED Control -->
-            <div class="card">
+            <!-- LED Control - Top Middle -->
+            <div class="card led-card">
                 <h2>LED Control</h2>
                 <div class="control-section">
                     <label class="switch">
@@ -45,22 +45,16 @@
                 </div>
             </div>
 
-            <!-- Chart -->
-            <div class="card chart-card">
-                <h2>Temperature & Humidity Trends</h2>
-                <canvas id="sensor-chart"></canvas>
-            </div>
-
-            <!-- Recent Data -->
-            <div class="card">
+            <!-- Recent Data - Top Right (MOVED HERE) -->
+            <div class="card recent-data-card">
                 <h2>Recent Data</h2>
                 <div class="data-table-container">
                     <table id="recent-data-table">
                         <thead>
                             <tr>
                                 <th>Time</th>
-                                <th>Temp (°C)</th>
-                                <th>Humidity (%)</th>
+                                <th>Temp</th>
+                                <th>Hum</th>
                                 <th>LED</th>
                             </tr>
                         </thead>
@@ -69,6 +63,12 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <!-- Chart - Full Width Bottom -->
+            <div class="card chart-card">
+                <h2>Temperature & Humidity Trends</h2>
+                <canvas id="sensor-chart"></canvas>
             </div>
         </div>
     </div>

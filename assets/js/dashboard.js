@@ -117,21 +117,23 @@ class IoTDashboard {
         this.chart.update('none'); // No animation for smoother updates
     }
 
-    updateDataTable(data) {
-        const tbody = document.querySelector('#recent-data-table tbody');
-        tbody.innerHTML = '';
+updateDataTable(data) {
+    const tbody = document.querySelector('#recent-data-table tbody');
+    tbody.innerHTML = '';
 
-        data.slice(0, 5).forEach(row => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${row.time}</td>
-                <td>${row.temperature}</td>
-                <td>${row.humidity}</td>
-                <td><span class="led-indicator ${row.led_status == 1 ? 'on' : 'off'}">${row.led_status == 1 ? 'ON' : 'OFF'}</span></td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
+    // Show only 5 most recent rows
+    data.slice(0, 5).forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row.time}</td>
+            <td>${row.temperature}°C</td>
+            <td>${row.humidity}%</td>
+            <td><span class="led-indicator ${row.led_status == 1 ? 'on' : 'off'}">${row.led_status == 1 ? 'ON' : 'OFF'}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
 
     async updateLEDStatus(isOn) {
         try {
